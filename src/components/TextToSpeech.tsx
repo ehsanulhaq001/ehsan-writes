@@ -299,18 +299,33 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
           <>
             {/* Wave animation - only animate when actually playing */}
             <div className={`tts-wave-animation ${isPaused ? "paused" : ""}`}>
-              <div className="wave-bar" style={{ animationDelay: "0ms" }}></div>
               <div
-                className="wave-bar"
-                style={{ animationDelay: "100ms" }}
+                className="wave-bar bar-1"
+                style={{ animationDelay: "0ms", animationDuration: "1.2s" }}
               ></div>
               <div
-                className="wave-bar"
-                style={{ animationDelay: "200ms" }}
+                className="wave-bar bar-2"
+                style={{ animationDelay: "150ms", animationDuration: "1.5s" }}
               ></div>
               <div
-                className="wave-bar"
-                style={{ animationDelay: "300ms" }}
+                className="wave-bar bar-3"
+                style={{ animationDelay: "300ms", animationDuration: "0.9s" }}
+              ></div>
+              <div
+                className="wave-bar bar-4"
+                style={{ animationDelay: "100ms", animationDuration: "1.3s" }}
+              ></div>
+              <div
+                className="wave-bar bar-5"
+                style={{ animationDelay: "450ms", animationDuration: "1.1s" }}
+              ></div>
+              <div
+                className="wave-bar bar-6"
+                style={{ animationDelay: "250ms", animationDuration: "1.4s" }}
+              ></div>
+              <div
+                className="wave-bar bar-7"
+                style={{ animationDelay: "350ms", animationDuration: "1.0s" }}
               ></div>
             </div>
 

@@ -1420,33 +1420,102 @@ html {
 .tts-wave-animation {
   display: flex;
   align-items: center;
-  gap: 2px;
-  height: 16px;
+  gap: 1.5px;
+  height: 18px;
   margin: 0 0.25rem;
 }
 
 .wave-bar {
-  width: 2px;
-  height: 4px;
+  width: 2.5px;
+  height: 3px;
   background: var(--text-primary);
-  border-radius: 1px;
-  animation: wave 1.2s ease-in-out infinite;
+  border-radius: 1.5px;
+  transform-origin: bottom;
 }
+
+/* Individual bar animations for more natural feel */
+.wave-bar.bar-1 { animation: wave-low ease-in-out infinite; }
+.wave-bar.bar-2 { animation: wave-high ease-in-out infinite; }
+.wave-bar.bar-3 { animation: wave-mid ease-in-out infinite; }
+.wave-bar.bar-4 { animation: wave-high ease-in-out infinite; }
+.wave-bar.bar-5 { animation: wave-low ease-in-out infinite; }
+.wave-bar.bar-6 { animation: wave-mid ease-in-out infinite; }
+.wave-bar.bar-7 { animation: wave-low ease-in-out infinite; }
 
 /* Pause the animation when paused */
 .tts-wave-animation.paused .wave-bar {
   animation-play-state: paused;
-  height: 4px;
-  opacity: 0.7;
+  height: 3px;
+  opacity: 0.6;
+  transform: scaleY(1);
 }
 
-@keyframes wave {
+/* Different wave patterns for spectrum-like effect */
+@keyframes wave-low {
   0%, 100% {
-    height: 4px;
-    opacity: 0.7;
+    transform: scaleY(1);
+    opacity: 0.6;
+  }
+  25% {
+    transform: scaleY(2.5);
+    opacity: 0.8;
   }
   50% {
-    height: 12px;
+    transform: scaleY(1.5);
+    opacity: 0.9;
+  }
+  75% {
+    transform: scaleY(2);
+    opacity: 0.7;
+  }
+}
+
+@keyframes wave-mid {
+  0%, 100% {
+    transform: scaleY(1.2);
+    opacity: 0.7;
+  }
+  20% {
+    transform: scaleY(3.5);
+    opacity: 1;
+  }
+  40% {
+    transform: scaleY(2);
+    opacity: 0.8;
+  }
+  60% {
+    transform: scaleY(4);
+    opacity: 0.9;
+  }
+  80% {
+    transform: scaleY(1.8);
+    opacity: 0.75;
+  }
+}
+
+@keyframes wave-high {
+  0%, 100% {
+    transform: scaleY(1.5);
+    opacity: 0.8;
+  }
+  15% {
+    transform: scaleY(5);
+    opacity: 1;
+  }
+  30% {
+    transform: scaleY(2.5);
+    opacity: 0.9;
+  }
+  45% {
+    transform: scaleY(4.5);
+    opacity: 0.95;
+  }
+  60% {
+    transform: scaleY(3);
+    opacity: 0.85;
+  }
+  85% {
+    transform: scaleY(5.5);
     opacity: 1;
   }
 }
@@ -1705,6 +1774,12 @@ html {
 
   .tts-wave-animation {
     margin: 0 0.125rem;
+    gap: 1px;
+    height: 16px;
+  }
+
+  .wave-bar {
+    width: 2px;
   }
 
   .audio-controls-panel {
