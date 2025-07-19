@@ -231,6 +231,7 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
           )}
 
           <div className="tts-progress-info">
+            <label>PROGRESS</label>
             <span className="tts-progress">
               {currentChunkIndexRef.current + 1}/{textChunksRef.current.length}
             </span>

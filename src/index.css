@@ -1378,7 +1378,7 @@ html {
   align-items: center;
   gap: 0.5rem;
   padding: 0.375rem;
-  background: var(--accent);
+  background: var(--bg-tertiary);
   border-radius: 6px;
   opacity: 0.9;
   transition: opacity 0.2s ease;
@@ -1391,7 +1391,7 @@ html {
 .tts-main-btn, .tts-stop-btn-compact, .tts-dropdown-btn {
   background: none;
   border: none;
-  color: white;
+  color: var(--text-primary);
   cursor: pointer;
   padding: 0.25rem;
   transition: all 0.2s ease;
@@ -1428,7 +1428,7 @@ html {
 .wave-bar {
   width: 2px;
   height: 4px;
-  background: white;
+  background: var(--text-primary);
   border-radius: 1px;
   animation: wave 1.2s ease-in-out infinite;
 }
@@ -1455,13 +1455,11 @@ html {
 .audio-controls-panel {
   width: 100%;
   margin: 1.5rem 0;
-  padding: 1.25rem 1.5rem;
+  padding: 1rem 1.5rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border-subtle);
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(10px);
 }
 
 .tts-panel-settings {
@@ -1472,16 +1470,15 @@ html {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
-  max-width: 480px;
-  margin: 0 auto;
+  gap: 2rem;
+  width: 100%;
+  max-width: none;
 }
 
 .tts-progress-info {
   display: flex;
   align-items: center;
-  justify-content: center;
-  min-width: 60px;
+  gap: 0.75rem;
 }
 
 /* Audio controls panel */
@@ -1713,14 +1710,14 @@ html {
   }
 
   .audio-controls-panel {
-    margin: 1.5rem 0;
-    padding: 1.5rem;
+    margin: 1rem 0;
+    padding: 1rem;
     border-radius: 12px;
   }
 
   .tts-settings-row {
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.5rem;
     text-align: center;
   }
 
