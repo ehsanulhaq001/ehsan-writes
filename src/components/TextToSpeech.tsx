@@ -6,6 +6,9 @@ interface TextToSpeechProps {
   showControls?: boolean;
   setShowControls?: (show: boolean) => void;
   panelMode?: boolean;
+  showPanel?: boolean;
+  setShowPanel?: (show: boolean) => void;
+  setIsPlaying?: (playing: boolean) => void;
 }
 
 const TextToSpeech: React.FC<TextToSpeechProps> = ({
@@ -14,8 +17,11 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
   showControls = false,
   setShowControls,
   panelMode = false,
+  showPanel = false,
+  setShowPanel,
+  setIsPlaying,
 }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlayingLocal] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
   const [rate, setRate] = useState(1);
@@ -23,11 +29,17 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
     []
   );
   const [selectedVoiceIndex, setSelectedVoiceIndex] = useState(0);
-  const [showPanel, setShowPanel] = useState(false);
 
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const textChunksRef = useRef<string[]>([]);
   const currentChunkIndexRef = useRef(0);
+
+  // Update parent component when playing state changes
+  useEffect(() => {
+    if (setIsPlaying) {
+      setIsPlaying(isPlaying);
+    }
+  }, [isPlaying, setIsPlaying]);
 
   // Extract plain text from HTML content
   const extractTextFromHTML = (html: string): string => {
@@ -97,7 +109,7 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
 
   const speakNextChunk = () => {
     if (currentChunkIndexRef.current >= textChunksRef.current.length) {
-      setIsPlaying(false);
+      setIsPlayingLocal(false);
       setIsPaused(false);
       currentChunkIndexRef.current = 0;
       return;
@@ -118,7 +130,7 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
 
     utterance.onerror = (event) => {
       console.error("Speech synthesis error:", event);
-      setIsPlaying(false);
+      setIsPlayingLocal(false);
       setIsPaused(false);
     };
 
@@ -132,11 +144,11 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
     if (isPaused) {
       speechSynthesis.resume();
       setIsPaused(false);
-      setIsPlaying(true);
+      setIsPlayingLocal(true);
     } else {
       currentChunkIndexRef.current = 0;
       speakNextChunk();
-      setIsPlaying(true);
+      setIsPlayingLocal(true);
       setIsPaused(false);
     }
   };
@@ -145,13 +157,13 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
     if (speechSynthesis.speaking) {
       speechSynthesis.pause();
       setIsPaused(true);
-      setIsPlaying(false);
+      setIsPlayingLocal(false);
     }
   };
 
   const handleStop = () => {
     speechSynthesis.cancel();
-    setIsPlaying(false);
+    setIsPlayingLocal(false);
     setIsPaused(false);
     currentChunkIndexRef.current = 0;
   };
@@ -173,60 +185,22 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
   };
 
   const togglePanel = () => {
-    setShowPanel(!showPanel);
+    if (setShowPanel) {
+      setShowPanel(!showPanel);
+    }
   };
 
   if (!isSupported) {
     return null;
   }
 
-  // Panel mode - show only the controls
+  // Panel mode - show only the settings in the external panel
   if (panelMode) {
     return (
-      <div className="tts-panel-content">
-        <div className="tts-controls">
-          <button
-            onClick={isPlaying ? handlePause : handlePlay}
-            className="tts-play-btn"
-            title={
-              isPlaying
-                ? "Pause audio"
-                : isPaused
-                ? "Resume audio"
-                : "Play audio"
-            }
-          >
-            {isPlaying ? "pause" : "listen"}
-          </button>
-
-          {(isPlaying || isPaused) && (
-            <>
-              <button
-                onClick={handleStop}
-                className="tts-stop-btn"
-                title="Stop audio"
-              >
-                stop
-              </button>
-              <span className="tts-progress">
-                {currentChunkIndexRef.current + 1}/
-                {textChunksRef.current.length}
-              </span>
-            </>
-          )}
-
-          <button
-            onClick={() => setShowControls && setShowControls(false)}
-            className="tts-close-btn"
-            title="Hide audio controls"
-          >
-            ×
-          </button>
-        </div>
-
-        <div className="tts-settings">
+      <div className="tts-panel-settings">
+        <div className="tts-settings-row">
           <div className="tts-setting">
-            <label>speed</label>
+            <label>Speed</label>
             <div className="rate-control">
               <input
                 type="range"
@@ -242,7 +216,7 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
 
           {englishVoices.length > 0 && (
             <div className="tts-setting">
-              <label>voice</label>
+              <label>Voice</label>
               <select
                 value={selectedVoiceIndex}
                 onChange={(e) => handleVoiceChange(parseInt(e.target.value))}
@@ -255,6 +229,12 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
               </select>
             </div>
           )}
+
+          <div className="tts-progress-info">
+            <span className="tts-progress">
+              {currentChunkIndexRef.current + 1}/{textChunksRef.current.length}
+            </span>
+          </div>
         </div>
       </div>
     );
@@ -301,11 +281,11 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
           )}
         </button>
 
-        {/* Show additional controls when playing */}
+        {/* Show additional controls when playing or paused */}
         {(isPlaying || isPaused) && (
           <>
-            {/* Wave animation */}
-            <div className="tts-wave-animation">
+            {/* Wave animation - only animate when actually playing */}
+            <div className={`tts-wave-animation ${isPaused ? "paused" : ""}`}>
               <div className="wave-bar" style={{ animationDelay: "0ms" }}></div>
               <div
                 className="wave-bar"
@@ -363,50 +343,6 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
           </>
         )}
       </div>
-
-      {/* Expandable panel */}
-      {showPanel && (isPlaying || isPaused) && (
-        <div className="tts-expanded-panel">
-          <div className="tts-settings">
-            <div className="tts-setting">
-              <label>Speed</label>
-              <div className="rate-control">
-                <input
-                  type="range"
-                  min="0.5"
-                  max="2"
-                  step="0.1"
-                  value={rate}
-                  onChange={(e) => handleRateChange(parseFloat(e.target.value))}
-                />
-                <span>{rate.toFixed(1)}×</span>
-              </div>
-            </div>
-
-            {englishVoices.length > 0 && (
-              <div className="tts-setting">
-                <label>Voice</label>
-                <select
-                  value={selectedVoiceIndex}
-                  onChange={(e) => handleVoiceChange(parseInt(e.target.value))}
-                >
-                  {englishVoices.map((voice, index) => (
-                    <option key={`${voice.name}-${index}`} value={index}>
-                      {voice.name.split(" ")[0]} ({voice.lang})
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-          </div>
-
-          <div className="tts-progress-info">
-            <span className="tts-progress">
-              {currentChunkIndexRef.current + 1}/{textChunksRef.current.length}
-            </span>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

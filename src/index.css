@@ -1433,6 +1433,13 @@ html {
   animation: wave 1.2s ease-in-out infinite;
 }
 
+/* Pause the animation when paused */
+.tts-wave-animation.paused .wave-bar {
+  animation-play-state: paused;
+  height: 4px;
+  opacity: 0.7;
+}
+
 @keyframes wave {
   0%, 100% {
     height: 4px;
@@ -1444,20 +1451,35 @@ html {
   }
 }
 
-/* Expanded Panel */
-.tts-expanded-panel {
-  margin-top: 0.5rem;
-  padding: 1rem;
+/* Audio Controls Panel - Full Width */
+.audio-controls-panel {
+  width: 100%;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.tts-panel-settings {
+  width: 100%;
+}
+
+.tts-settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
 .tts-progress-info {
-  margin-top: 1rem;
   display: flex;
+  align-items: center;
   justify-content: center;
+  min-width: 80px;
 }
 
 /* Audio controls panel */
@@ -1671,8 +1693,15 @@ html {
     margin: 0 0.125rem;
   }
 
-  .tts-expanded-panel {
-    padding: 0.75rem;
+  .audio-controls-panel {
+    margin: 1rem 0;
+    padding: 1rem;
+  }
+
+  .tts-settings-row {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: stretch;
   }
 
   .tts-settings {
@@ -1697,6 +1726,11 @@ html {
   .tts-setting select {
     width: 100%;
     min-width: auto;
+  }
+
+  .tts-progress-info {
+    align-self: center;
+    margin-top: 0.5rem;
   }
 
   .tts-panel-content {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BlogPost } from "../types";
 import { formatDate } from "../utils/markdown";
 import TextToSpeech from "./TextToSpeech";
@@ -14,6 +14,9 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
   onBack,
   loading,
 }) => {
+  const [showAudioPanel, setShowAudioPanel] = useState(false);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+
   if (loading) {
     return <div className="loading">Loading post...</div>;
   }
@@ -46,10 +49,29 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
                 ))}
               </div>
             )}
-            <TextToSpeech content={post.content} title={post.title} />
+            <TextToSpeech
+              content={post.content}
+              title={post.title}
+              showPanel={showAudioPanel}
+              setShowPanel={setShowAudioPanel}
+              setIsPlaying={setIsAudioPlaying}
+            />
           </div>
         </div>
       </header>
+
+      {showAudioPanel && (
+        <div className="audio-controls-panel">
+          <TextToSpeech
+            content={post.content}
+            title={post.title}
+            panelMode={true}
+            showPanel={showAudioPanel}
+            setShowPanel={setShowAudioPanel}
+            setIsPlaying={setIsAudioPlaying}
+          />
+        </div>
+      )}
 
       <div
         className="blog-content"
