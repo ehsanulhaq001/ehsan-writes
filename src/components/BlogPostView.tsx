@@ -1,6 +1,7 @@
 import React from "react";
 import { BlogPost } from "../types";
 import { formatDate } from "../utils/markdown";
+import TextToSpeech from "./TextToSpeech";
 
 interface BlogPostViewProps {
   post: BlogPost;
@@ -35,15 +36,18 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
             )}
           </div>
 
-          {post.tags.length > 0 && (
-            <div className="post-tags">
-              {post.tags.map((tag) => (
-                <span key={tag} className="post-tag">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
+          <div className="meta-bottom">
+            {post.tags.length > 0 && (
+              <div className="post-tags">
+                {post.tags.map((tag) => (
+                  <span key={tag} className="post-tag">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+            <TextToSpeech content={post.content} title={post.title} />
+          </div>
         </div>
       </header>
 
