@@ -24,6 +24,7 @@ const HomePage: React.FC = () => {
   const [searchParams, setSearchParams] = useState<SearchParams>({
     query: "",
     selectedTags: [],
+    tagFilterMode: "OR",
   });
   const navigate = useNavigate();
 
@@ -76,16 +77,25 @@ const HomePage: React.FC = () => {
     }));
   };
 
+  // Handle tag filter mode toggle
+  const handleTagFilterModeToggle = () => {
+    setSearchParams((prev) => ({
+      ...prev,
+      tagFilterMode: prev.tagFilterMode === "OR" ? "AND" : "OR",
+    }));
+  };
+
   // Clear all filters
   const handleClearFilters = () => {
-    setSearchParams({ query: "", selectedTags: [] });
+    setSearchParams({ query: "", selectedTags: [], tagFilterMode: "OR" });
   };
 
   // Filter posts based on selected tags only (not text search)
   const filteredPosts = filterPosts(
     posts,
     "", // Don't filter by text query anymore - handled by dropdown
-    searchParams.selectedTags
+    searchParams.selectedTags,
+    searchParams.tagFilterMode
   );
 
   if (loading) {
@@ -111,6 +121,8 @@ const HomePage: React.FC = () => {
         onTagToggle={handleTagSelect}
         posts={posts}
         onPostSelect={handlePostSelect}
+        tagFilterMode={searchParams.tagFilterMode}
+        onTagFilterModeToggle={handleTagFilterModeToggle}
       />
 
       <BlogList

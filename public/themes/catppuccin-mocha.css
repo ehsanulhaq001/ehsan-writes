@@ -1,0 +1,15 @@
+/* Catppuccin Mocha Theme */
+:root {
+  --bg-primary: #1e1e2e;
+  --bg-secondary: #181825;
+  --bg-tertiary: #585b70;
+  --text-primary: #cdd6f4;
+  --text-secondary: #cdd6f4;
+  --text-muted: #bac2de;
+  --accent: #89b4fa;
+  --accent-hover: #74a5f0;
+  --accent-light: rgba(137, 180, 250, 0.2);
+  --border-subtle: #45475a;
+  --border-light: #585b70;
+  --gradient: linear-gradient(135deg, #89b4fa 0%, #cba6f7 100%);
+} 

@@ -1,0 +1,15 @@
+/* Material Dark Theme */
+:root {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-tertiary: #3d3d3d;
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --text-muted: #b3b3b3;
+  --accent: #bb86fc;
+  --accent-hover: #985eff;
+  --accent-light: rgba(187, 134, 252, 0.2);
+  --border-subtle: #2d2d2d;
+  --border-light: #3d3d3d;
+  --gradient: linear-gradient(135deg, #bb86fc 0%, #03dac6 100%);
+} 

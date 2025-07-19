@@ -1,0 +1,15 @@
+/* VS Code Dark Theme */
+:root {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #252526;
+  --bg-tertiary: #3c3c3c;
+  --text-primary: #cccccc;
+  --text-secondary: #cccccc;
+  --text-muted: #9f9f9f;
+  --accent: #007acc;
+  --accent-hover: #005a9e;
+  --accent-light: rgba(0, 122, 204, 0.2);
+  --border-subtle: #3e3e42;
+  --border-light: #464647;
+  --gradient: linear-gradient(135deg, #007acc 0%, #4ec9b0 100%);
+} 

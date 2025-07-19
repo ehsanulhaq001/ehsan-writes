@@ -77,6 +77,171 @@ export const themes: Theme[] = [
       secondary: '#1a0d1a',
       accent: '#00ffff'
     }
+  },
+  {
+    id: 'github-light',
+    name: 'GitHub Light',
+    description: 'Clean light theme inspired by GitHub',
+    cssFile: '/themes/github-light.css',
+    preview: {
+      primary: '#ffffff',
+      secondary: '#f6f8fa',
+      accent: '#0969da'
+    }
+  },
+  {
+    id: 'github-dark',
+    name: 'GitHub Dark',
+    description: 'Dark theme inspired by GitHub Dark',
+    cssFile: '/themes/github-dark.css',
+    preview: {
+      primary: '#0d1117',
+      secondary: '#161b22',
+      accent: '#2f81f7'
+    }
+  },
+  {
+    id: 'github-dimmed',
+    name: 'GitHub Dimmed',
+    description: 'Softer dark theme with reduced contrast',
+    cssFile: '/themes/github-dimmed.css',
+    preview: {
+      primary: '#22272e',
+      secondary: '#2d333b',
+      accent: '#539bf5'
+    }
+  },
+  {
+    id: 'vscode-dark',
+    name: 'VS Code Dark',
+    description: 'Popular VS Code editor dark theme',
+    cssFile: '/themes/vscode-dark.css',
+    preview: {
+      primary: '#1e1e1e',
+      secondary: '#252526',
+      accent: '#007acc'
+    }
+  },
+  {
+    id: 'monokai',
+    name: 'Monokai',
+    description: 'Classic Monokai color scheme',
+    cssFile: '/themes/monokai.css',
+    preview: {
+      primary: '#272822',
+      secondary: '#383830',
+      accent: '#a6e22e'
+    }
+  },
+  {
+    id: 'one-dark',
+    name: 'One Dark',
+    description: 'Atom\'s popular One Dark theme',
+    cssFile: '/themes/one-dark.css',
+    preview: {
+      primary: '#282c34',
+      secondary: '#2c313c',
+      accent: '#61afef'
+    }
+  },
+  {
+    id: 'solarized-light',
+    name: 'Solarized Light',
+    description: 'Popular Solarized light color palette',
+    cssFile: '/themes/solarized-light.css',
+    preview: {
+      primary: '#fdf6e3',
+      secondary: '#eee8d5',
+      accent: '#268bd2'
+    }
+  },
+  {
+    id: 'solarized-dark',
+    name: 'Solarized Dark',
+    description: 'Popular Solarized dark color palette',
+    cssFile: '/themes/solarized-dark.css',
+    preview: {
+      primary: '#002b36',
+      secondary: '#073642',
+      accent: '#268bd2'
+    }
+  },
+  {
+    id: 'material-dark',
+    name: 'Material Dark',
+    description: 'Google\'s Material Design dark theme',
+    cssFile: '/themes/material-dark.css',
+    preview: {
+      primary: '#121212',
+      secondary: '#1e1e1e',
+      accent: '#bb86fc'
+    }
+  },
+  {
+    id: 'oceanic-next',
+    name: 'Oceanic Next',
+    description: 'Blue-toned theme popular in editors',
+    cssFile: '/themes/oceanic-next.css',
+    preview: {
+      primary: '#1b2b34',
+      secondary: '#343d46',
+      accent: '#6699cc'
+    }
+  },
+  {
+    id: 'tokyo-night',
+    name: 'Tokyo Night',
+    description: 'Purple and blue tones inspired by Tokyo at night',
+    cssFile: '/themes/tokyo-night.css',
+    preview: {
+      primary: '#1a1b26',
+      secondary: '#24283b',
+      accent: '#7aa2f7'
+    }
+  },
+  {
+    id: 'catppuccin-mocha',
+    name: 'Catppuccin Mocha',
+    description: 'Warm, cozy colors from the Catppuccin palette',
+    cssFile: '/themes/catppuccin-mocha.css',
+    preview: {
+      primary: '#1e1e2e',
+      secondary: '#181825',
+      accent: '#89b4fa'
+    }
+  },
+  {
+    id: 'forest-green',
+    name: 'Forest Green',
+    description: 'Natural green tones for a calming experience',
+    cssFile: '/themes/forest-green.css',
+    preview: {
+      primary: '#0d1b1e',
+      secondary: '#1a2f35',
+      accent: '#4caf50'
+    }
+  },
+  {
+    id: 'sunset-orange',
+    name: 'Sunset Orange',
+    description: 'Warm orange and red tones for vibrant energy',
+    cssFile: '/themes/sunset-orange.css',
+    preview: {
+      primary: '#1a0e0a',
+      secondary: '#2d1b14',
+      accent: '#ff6b35'
+    }
+  },
+  {
+    id: 'midnight-blue',
+    name: 'Midnight Blue',
+    description: 'Deep blue tones for a professional appearance',
+    cssFile: '/themes/midnight-blue.css',
+    preview: {
+      primary: '#0f1419',
+      secondary: '#1a2332',
+      accent: '#00bfff'
+    }
   }
 ];
 

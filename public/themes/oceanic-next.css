@@ -1,0 +1,15 @@
+/* Oceanic Next Theme */
+:root {
+  --bg-primary: #1b2b34;
+  --bg-secondary: #343d46;
+  --bg-tertiary: #5a6975;
+  --text-primary: #cdd3de;
+  --text-secondary: #cdd3de;
+  --text-muted: #a7adba;
+  --accent: #6699cc;
+  --accent-hover: #5580b3;
+  --accent-light: rgba(102, 153, 204, 0.2);
+  --border-subtle: #343d46;
+  --border-light: #4f5b66;
+  --gradient: linear-gradient(135deg, #6699cc 0%, #5fb3b3 100%);
+} 

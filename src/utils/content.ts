@@ -52,7 +52,7 @@ export function getAllTags(posts: BlogPost[]): string[] {
 }
 
 // Filter posts by search criteria
-export function filterPosts(posts: BlogPost[], query: string, selectedTags: string[]): BlogPost[] {
+export function filterPosts(posts: BlogPost[], query: string, selectedTags: string[], tagFilterMode: 'AND' | 'OR' = 'OR'): BlogPost[] {
   return posts.filter(post => {
     // Text search in title, excerpt, and content
     const searchText = query.toLowerCase();
@@ -61,9 +61,17 @@ export function filterPosts(posts: BlogPost[], query: string, selectedTags: stri
       post.excerpt.toLowerCase().includes(searchText) ||
       post.content.toLowerCase().includes(searchText);
 
-    // Tag filtering
-    const matchesTags = selectedTags.length === 0 ||
-      selectedTags.some(tag => post.tags.includes(tag));
+    // Tag filtering with AND/OR support
+    let matchesTags = true;
+    if (selectedTags.length > 0) {
+      if (tagFilterMode === 'AND') {
+        // AND operation: post must have ALL selected tags
+        matchesTags = selectedTags.every(tag => post.tags.includes(tag));
+      } else {
+        // OR operation: post must have ANY of the selected tags
+        matchesTags = selectedTags.some(tag => post.tags.includes(tag));
+      }
+    }
 
     return matchesText && matchesTags;
   });

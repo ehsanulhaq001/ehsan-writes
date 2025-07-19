@@ -10,6 +10,8 @@ interface SearchBarProps {
   onTagToggle?: (tag: string) => void;
   posts?: BlogPost[];
   onPostSelect?: (postId: string) => void;
+  tagFilterMode?: "AND" | "OR";
+  onTagFilterModeToggle?: () => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
@@ -20,6 +22,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
   onTagToggle,
   posts = [],
   onPostSelect,
+  tagFilterMode = "OR",
+  onTagFilterModeToggle,
 }) => {
   const [isTagMode, setIsTagMode] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -213,18 +217,39 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
       {selectedTags.length > 0 && (
         <div className="selected-tags">
-          <span className="selected-tags-label">Filtering by:</span>
-          {selectedTags.map((tag) => (
-            <button
-              key={tag}
-              className="selected-tag"
-              onClick={() => onTagToggle && onTagToggle(tag)}
-              title={`Remove ${tag} filter`}
-            >
-              #{tag}
-              <span className="remove-tag">×</span>
-            </button>
-          ))}
+          <div className="selected-tags-header">
+            <span className="selected-tags-label">
+              {selectedTags.length > 1 && tagFilterMode === "AND"
+                ? "Posts with all tags:"
+                : "Posts with tags:"}
+            </span>
+            {selectedTags.length > 1 && onTagFilterModeToggle && (
+              <button
+                className="filter-mode-toggle"
+                onClick={onTagFilterModeToggle}
+                title={
+                  tagFilterMode === "OR"
+                    ? "Click to show posts that have ALL selected tags"
+                    : "Click to show posts that have ANY selected tag"
+                }
+              >
+                {tagFilterMode === "OR" ? "any" : "all"}
+              </button>
+            )}
+          </div>
+          <div className="selected-tags-list">
+            {selectedTags.map((tag) => (
+              <button
+                key={tag}
+                className="selected-tag"
+                onClick={() => onTagToggle && onTagToggle(tag)}
+                title={`Remove ${tag} filter`}
+              >
+                #{tag}
+                <span className="remove-tag">×</span>
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

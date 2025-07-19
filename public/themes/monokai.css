@@ -1,0 +1,15 @@
+/* Monokai Theme */
+:root {
+  --bg-primary: #272822;
+  --bg-secondary: #383830;
+  --bg-tertiary: #5a594a;
+  --text-primary: #f8f8f2;
+  --text-secondary: #cfcfc2;
+  --text-muted: #a1a193;
+  --accent: #a6e22e;
+  --accent-hover: #94d023;
+  --accent-light: rgba(166, 226, 46, 0.2);
+  --border-subtle: #49483e;
+  --border-light: #5a594a;
+  --gradient: linear-gradient(135deg, #a6e22e 0%, #f92672 100%);
+} 

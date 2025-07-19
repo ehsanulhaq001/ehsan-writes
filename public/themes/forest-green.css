@@ -1,0 +1,15 @@
+/* Forest Green Theme */
+:root {
+  --bg-primary: #0d1b1e;
+  --bg-secondary: #1a2f35;
+  --bg-tertiary: #3a5b66;
+  --text-primary: #e8f5e8;
+  --text-secondary: #e8f5e8;
+  --text-muted: #c1d5c1;
+  --accent: #4caf50;
+  --accent-hover: #45a049;
+  --accent-light: rgba(76, 175, 80, 0.2);
+  --border-subtle: #2e4a54;
+  --border-light: #3a5b66;
+  --gradient: linear-gradient(135deg, #4caf50 0%, #81c784 100%);
+} 

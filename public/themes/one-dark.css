@@ -1,0 +1,15 @@
+/* One Dark Theme */
+:root {
+  --bg-primary: #282c34;
+  --bg-secondary: #2c313c;
+  --bg-tertiary: #4b5263;
+  --text-primary: #abb2bf;
+  --text-secondary: #abb2bf;
+  --text-muted: #828997;
+  --accent: #61afef;
+  --accent-hover: #4aa3f0;
+  --accent-light: rgba(97, 175, 239, 0.2);
+  --border-subtle: #3e4451;
+  --border-light: #4b5263;
+  --gradient: linear-gradient(135deg, #61afef 0%, #c678dd 100%);
+} 

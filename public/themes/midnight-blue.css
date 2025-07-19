@@ -1,0 +1,15 @@
+/* Midnight Blue Theme */
+:root {
+  --bg-primary: #0f1419;
+  --bg-secondary: #1a2332;
+  --bg-tertiary: #354b66;
+  --text-primary: #e6f1ff;
+  --text-secondary: #e6f1ff;
+  --text-muted: #b3d9ff;
+  --accent: #00bfff;
+  --accent-hover: #00a6e6;
+  --accent-light: rgba(0, 191, 255, 0.2);
+  --border-subtle: #2a3f54;
+  --border-light: #354b66;
+  --gradient: linear-gradient(135deg, #00bfff 0%, #4da6ff 100%);
+} 

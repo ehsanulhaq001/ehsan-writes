@@ -14,6 +14,8 @@ This blog now includes a comprehensive theme system similar to MonkeyType's impl
 
 ## Available Themes
 
+### Original Themes
+
 1. **Default Dark** - The classic dark theme with blue accents
 2. **Light** - Clean and bright light theme
 3. **Gruvbox Dark** - Retro groove colors with warm tones
@@ -21,6 +23,33 @@ This blog now includes a comprehensive theme system similar to MonkeyType's impl
 5. **Dracula** - Dark theme with purple accents
 6. **Terminal Green** - Classic terminal green on black
 7. **Cyberpunk** - Neon pink and cyan futuristic theme
+
+### GitHub-Inspired Themes
+
+8. **GitHub Light** - Clean light theme inspired by GitHub
+9. **GitHub Dark** - Dark theme inspired by GitHub Dark
+10. **GitHub Dimmed** - Softer dark theme with reduced contrast
+
+### Editor-Inspired Themes
+
+11. **VS Code Dark** - Popular VS Code editor dark theme
+12. **Monokai** - Classic Monokai color scheme
+13. **One Dark** - Atom's popular One Dark theme
+14. **Tokyo Night** - Purple and blue tones inspired by Tokyo at night
+15. **Catppuccin Mocha** - Warm, cozy colors from the Catppuccin palette
+
+### Classic Color Schemes
+
+16. **Solarized Light** - Popular Solarized light color palette
+17. **Solarized Dark** - Popular Solarized dark color palette
+18. **Material Dark** - Google's Material Design dark theme
+19. **Oceanic Next** - Blue-toned theme popular in editors
+
+### Nature & Color-Themed
+
+20. **Forest Green** - Natural green tones for a calming experience
+21. **Sunset Orange** - Warm orange and red tones for vibrant energy
+22. **Midnight Blue** - Deep blue tones for a professional appearance
 
 ## How to Use
 

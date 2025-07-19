@@ -20,6 +20,7 @@ export interface BlogMetadata {
 export interface SearchParams {
   query: string;
   selectedTags: string[];
+  tagFilterMode: 'AND' | 'OR';
 }
 
 export interface SearchSnippet {

@@ -1,0 +1,15 @@
+/* Sunset Orange Theme */
+:root {
+  --bg-primary: #1a0e0a;
+  --bg-secondary: #2d1b14;
+  --bg-tertiary: #5c4236;
+  --text-primary: #fff5e6;
+  --text-secondary: #fff5e6;
+  --text-muted: #e6ccb3;
+  --accent: #ff6b35;
+  --accent-hover: #e55a2e;
+  --accent-light: rgba(255, 107, 53, 0.2);
+  --border-subtle: #4a3529;
+  --border-light: #5c4236;
+  --gradient: linear-gradient(135deg, #ff6b35 0%, #f9844a 100%);
+} 

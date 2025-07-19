@@ -1,0 +1,15 @@
+/* GitHub Dimmed Theme */
+:root {
+  --bg-primary: #22272e;
+  --bg-secondary: #2d333b;
+  --bg-tertiary: #444c56;
+  --text-primary: #adbac7;
+  --text-secondary: #768390;
+  --text-muted: #768390;
+  --accent: #539bf5;
+  --accent-hover: #4184e4;
+  --accent-light: rgba(83, 155, 245, 0.15);
+  --border-subtle: #444c56;
+  --border-light: #373e47;
+  --gradient: linear-gradient(135deg, #539bf5 0%, #57ab5a 100%);
+} 

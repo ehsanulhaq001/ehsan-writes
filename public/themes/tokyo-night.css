@@ -1,0 +1,15 @@
+/* Tokyo Night Theme */
+:root {
+  --bg-primary: #1a1b26;
+  --bg-secondary: #24283b;
+  --bg-tertiary: #414868;
+  --text-primary: #c0caf5;
+  --text-secondary: #c0caf5;
+  --text-muted: #9aa5ce;
+  --accent: #7aa2f7;
+  --accent-hover: #6191f5;
+  --accent-light: rgba(122, 162, 247, 0.2);
+  --border-subtle: #3b4261;
+  --border-light: #414868;
+  --gradient: linear-gradient(135deg, #7aa2f7 0%, #bb9af7 100%);
+} 

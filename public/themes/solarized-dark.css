@@ -1,0 +1,15 @@
+/* Solarized Dark Theme */
+:root {
+  --bg-primary: #002b36;
+  --bg-secondary: #073642;
+  --bg-tertiary: #0c4c5c;
+  --text-primary: #839496;
+  --text-secondary: #839496;
+  --text-muted: #657b83;
+  --accent: #268bd2;
+  --accent-hover: #2176bd;
+  --accent-light: rgba(38, 139, 210, 0.2);
+  --border-subtle: #073642;
+  --border-light: #0c4c5c;
+  --gradient: linear-gradient(135deg, #268bd2 0%, #2aa198 100%);
+} 

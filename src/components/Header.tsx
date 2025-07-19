@@ -17,9 +17,14 @@ const Header: React.FC<HeaderProps> = ({ compact = false }) => {
     return (
       <header className="header-compact">
         <div className="header-compact-content">
-          <a href="/" onClick={handleHomeClick} className="home-link">
-            ← Ehsan Writes
+          <a href="/" onClick={handleHomeClick} className="back-button">
+            ← back
           </a>
+          <div className="header-compact-title">
+            <span className="compact-name">e h s a n</span>
+            <div className="compact-separator">/</div>
+            <span className="compact-writes">writes</span>
+          </div>
         </div>
       </header>
     );
@@ -28,13 +33,12 @@ const Header: React.FC<HeaderProps> = ({ compact = false }) => {
   return (
     <header className="header">
       <div className="header-content">
-        <h1>Ehsan Writes</h1>
-        <p>Thoughts, ideas, and insights</p>
-        {/* <nav className="nav">
-          <a href="/" className="active" onClick={handleHomeClick}>
-            all posts
-          </a>
-        </nav> */}
+        <div className="elegant-title">
+          <span className="elegant-name">e h s a n</span>
+          <div className="elegant-separator">/</div>
+          <span className="elegant-writes">writes</span>
+        </div>
+        <p className="header-subtitle">thoughts, ideas, and insights</p>
       </div>
     </header>
   );
