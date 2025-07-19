@@ -1,0 +1,15 @@
+/* Nord Theme */
+:root {
+  --bg-primary: #2e3440;
+  --bg-secondary: #3b4252;
+  --bg-tertiary: #434c5e;
+  --text-primary: #eceff4;
+  --text-secondary: #e5e9f0;
+  --text-muted: #d8dee9;
+  --accent: #88c0d0;
+  --accent-hover: #81a1c1;
+  --accent-light: rgba(136, 192, 208, 0.1);
+  --border-subtle: #4c566a;
+  --border-light: #5e81ac;
+  --gradient: linear-gradient(135deg, #88c0d0 0%, #5e81ac 100%);
+} 

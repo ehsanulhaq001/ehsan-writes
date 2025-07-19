@@ -1,0 +1,15 @@
+/* Gruvbox Dark Theme */
+:root {
+  --bg-primary: #282828;
+  --bg-secondary: #32302f;
+  --bg-tertiary: #3c3836;
+  --text-primary: #ebdbb2;
+  --text-secondary: #d5c4a1;
+  --text-muted: #a89984;
+  --accent: #d79921;
+  --accent-hover: #b57614;
+  --accent-light: rgba(215, 153, 33, 0.1);
+  --border-subtle: #504945;
+  --border-light: #665c54;
+  --gradient: linear-gradient(135deg, #d79921 0%, #cc241d 100%);
+} 

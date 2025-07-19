@@ -1,0 +1,15 @@
+/* Cyberpunk Theme */
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a0d1a;
+  --bg-tertiary: #2d1b2d;
+  --text-primary: #ff00ff;
+  --text-secondary: #00ffff;
+  --text-muted: #cc00cc;
+  --accent: #00ffff;
+  --accent-hover: #00cccc;
+  --accent-light: rgba(0, 255, 255, 0.1);
+  --border-subtle: #ff00ff;
+  --border-light: #cc00cc;
+  --gradient: linear-gradient(135deg, #ff00ff 0%, #00ffff 100%);
+} 

@@ -1,0 +1,15 @@
+/* Dracula Theme */
+:root {
+  --bg-primary: #282a36;
+  --bg-secondary: #44475a;
+  --bg-tertiary: #6272a4;
+  --text-primary: #f8f8f2;
+  --text-secondary: #f8f8f2;
+  --text-muted: #6272a4;
+  --accent: #bd93f9;
+  --accent-hover: #9575cd;
+  --accent-light: rgba(189, 147, 249, 0.1);
+  --border-subtle: #44475a;
+  --border-light: #6272a4;
+  --gradient: linear-gradient(135deg, #bd93f9 0%, #ff79c6 100%);
+} 

@@ -1,0 +1,36 @@
+{
+  "name": "ehsan-writes",
+  "version": "1.0.0",
+  "description": "Ehsan Writes - A minimal terminal-themed static blog built with React and TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@types/katex": "^0.16.7",
+    "@types/react-router-dom": "^5.3.3",
+    "katex": "^0.16.22",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.7.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^4.3.0"
+  },
+  "keywords": [
+    "blog",
+    "static",
+    "minimal",
+    "terminal",
+    "markdown"
+  ],
+  "author": "",
+  "license": "MIT"
+}

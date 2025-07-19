@@ -1,0 +1,15 @@
+/* Light Theme */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #495057;
+  --text-muted: #6c757d;
+  --accent: #0066cc;
+  --accent-hover: #0052a3;
+  --accent-light: rgba(0, 102, 204, 0.1);
+  --border-subtle: #dee2e6;
+  --border-light: #ced4da;
+  --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+} 
