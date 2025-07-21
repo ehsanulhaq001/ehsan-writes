@@ -792,40 +792,42 @@ a:hover {
 }
 
 /* Image size classes */
-.blog-content .img-small {
+.post-content .img-small {
   width: 300px;
   max-width: 100%;
 }
 
-.blog-content .img-medium {
+.post-content .img-medium {
   width: 500px;
   max-width: 100%;
 }
 
-.blog-content .img-large {
-  width: 800px;
+.post-content .img-large {
+  width: 700px;
   max-width: 100%;
 }
 
-.blog-content .img-full {
+.post-content .img-full {
   width: 100%;
 }
 
 /* Image position classes */
-.blog-content .img-center {
+.post-content .img-center {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-.blog-content .img-left {
+.post-content .img-left {
   float: left;
   margin: 0 2rem 2rem 0;
+  max-width: 45%;
 }
 
-.blog-content .img-right {
+.post-content .img-right {
   float: right;
   margin: 0 0 2rem 2rem;
+  max-width: 45%;
 }
 
 /* Clear floats after floating images */
@@ -911,6 +913,20 @@ a:hover {
   .blog-content h3 {
     font-size: 1.125rem;
     margin-top: 1.75rem;
+  }
+  
+  /* Prevent image overflow on mobile */
+  .post-content .img-left,
+  .post-content .img-right {
+    float: none !important;
+    display: block !important;
+    margin: 2rem auto !important;
+    max-width: 100% !important;
+  }
+  
+  .post-content .img-medium {
+    width: 100% !important;
+    max-width: 500px !important;
   }
 }
 
