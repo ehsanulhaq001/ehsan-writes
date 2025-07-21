@@ -9,6 +9,11 @@ interface TextToSpeechProps {
   showPanel?: boolean;
   setShowPanel?: (show: boolean) => void;
   setIsPlaying?: (playing: boolean) => void;
+  // New props for shared state
+  rate?: number;
+  setRate?: (rate: number) => void;
+  voiceIndex?: number;
+  setVoiceIndex?: (index: number) => void;
 }
 
 const TextToSpeech: React.FC<TextToSpeechProps> = ({
@@ -20,15 +25,29 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
   showPanel = false,
   setShowPanel,
   setIsPlaying,
+  // New props
+  rate: externalRate,
+  setRate: setExternalRate,
+  voiceIndex: externalVoiceIndex,
+  setVoiceIndex: setExternalVoiceIndex,
 }) => {
   const [isPlaying, setIsPlayingLocal] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
-  const [rate, setRate] = useState(1);
+  // Use internal state only if external props are not provided
+  const [internalRate, setInternalRate] = useState(1);
   const [englishVoices, setEnglishVoices] = useState<SpeechSynthesisVoice[]>(
     []
   );
-  const [selectedVoiceIndex, setSelectedVoiceIndex] = useState(0);
+  const [internalSelectedVoiceIndex, setInternalSelectedVoiceIndex] =
+    useState(0);
+
+  // Use external or internal state
+  const rate = externalRate !== undefined ? externalRate : internalRate;
+  const selectedVoiceIndex =
+    externalVoiceIndex !== undefined
+      ? externalVoiceIndex
+      : internalSelectedVoiceIndex;
 
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const textChunksRef = useRef<string[]>([]);
@@ -87,7 +106,11 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
         const voices = speechSynthesis.getVoices();
         const englishVoices = voices.filter((v) => v.lang.startsWith("en-"));
         setEnglishVoices(englishVoices);
-        setSelectedVoiceIndex(0);
+        if (setExternalVoiceIndex) {
+          setExternalVoiceIndex(0);
+        } else {
+          setInternalSelectedVoiceIndex(0);
+        }
       };
 
       loadVoices();
@@ -169,16 +192,26 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
   };
 
   const handleRateChange = (newRate: number) => {
-    setRate(newRate);
-    if (isPlaying) {
+    if (setExternalRate) {
+      setExternalRate(newRate);
+    } else {
+      setInternalRate(newRate);
+    }
+    // Restart audio if it's playing or paused to apply new settings
+    if (isPlaying || isPaused) {
       handleStop();
       setTimeout(() => handlePlay(), 100);
     }
   };
 
   const handleVoiceChange = (index: number) => {
-    setSelectedVoiceIndex(index);
-    if (isPlaying) {
+    if (setExternalVoiceIndex) {
+      setExternalVoiceIndex(index);
+    } else {
+      setInternalSelectedVoiceIndex(index);
+    }
+    // Restart audio if it's playing or paused to apply new settings
+    if (isPlaying || isPaused) {
       handleStop();
       setTimeout(() => handlePlay(), 100);
     }

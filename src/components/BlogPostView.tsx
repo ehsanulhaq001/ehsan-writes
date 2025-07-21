@@ -16,6 +16,9 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
 }) => {
   const [showAudioPanel, setShowAudioPanel] = useState(false);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  // Add shared audio settings state
+  const [audioRate, setAudioRate] = useState(1);
+  const [audioVoiceIndex, setAudioVoiceIndex] = useState(0);
 
   if (loading) {
     return <div className="loading">Loading post...</div>;
@@ -55,6 +58,10 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
               showPanel={showAudioPanel}
               setShowPanel={setShowAudioPanel}
               setIsPlaying={setIsAudioPlaying}
+              rate={audioRate}
+              setRate={setAudioRate}
+              voiceIndex={audioVoiceIndex}
+              setVoiceIndex={setAudioVoiceIndex}
             />
           </div>
         </div>
@@ -69,14 +76,24 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
             showPanel={showAudioPanel}
             setShowPanel={setShowAudioPanel}
             setIsPlaying={setIsAudioPlaying}
+            rate={audioRate}
+            setRate={setAudioRate}
+            voiceIndex={audioVoiceIndex}
+            setVoiceIndex={setAudioVoiceIndex}
           />
         </div>
       )}
 
       <div
-        className="blog-content"
+        className="post-content"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
+
+      <footer className="post-footer">
+        <button onClick={onBack} className="back-button">
+          ← Back to posts
+        </button>
+      </footer>
     </article>
   );
 };

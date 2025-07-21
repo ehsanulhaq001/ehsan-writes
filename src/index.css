@@ -699,7 +699,7 @@ a:hover {
 .post-tag {
   background: var(--bg-tertiary);
   color: var(--text-secondary);
-  padding: 0.25rem 0.75rem;
+  padding: 0.375rem 0.75rem;
   border-radius: 12px;
   font-size: 0.75rem;
   font-weight: 500;
@@ -1379,7 +1379,7 @@ html {
   gap: 0.5rem;
   padding: 0.375rem;
   background: var(--bg-tertiary);
-  border-radius: 6px;
+  border-radius: 12px;
   opacity: 0.9;
   transition: opacity 0.2s ease;
 }
@@ -1430,7 +1430,6 @@ html {
   height: 3px;
   background: var(--text-primary);
   border-radius: 1.5px;
-  transform-origin: bottom;
 }
 
 /* Individual bar animations for more natural feel */
