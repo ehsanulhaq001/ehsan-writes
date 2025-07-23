@@ -172,4 +172,24 @@
   text-align: center;
   color: var(--text-muted);
   font-size: 0.875rem;
+}
+
+.footer .version-info {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  opacity: 0.6;
+}
+
+.footer .version-info span {
+  color: var(--text-muted);
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  cursor: help;
+  transition: opacity 0.2s ease;
+}
+
+.footer .version-info span:hover {
+  opacity: 0.9;
 } 
