@@ -3,12 +3,9 @@ import React, { useState, useEffect, useRef } from "react";
 interface TextToSpeechProps {
   content: string;
   title: string;
-  showControls?: boolean;
-  setShowControls?: (show: boolean) => void;
   panelMode?: boolean;
   showPanel?: boolean;
   setShowPanel?: (show: boolean) => void;
-  setIsPlaying?: (playing: boolean) => void;
   // New props for shared state
   rate?: number;
   setRate?: (rate: number) => void;
@@ -19,12 +16,9 @@ interface TextToSpeechProps {
 const TextToSpeech: React.FC<TextToSpeechProps> = ({
   content,
   title,
-  showControls = false,
-  setShowControls,
   panelMode = false,
   showPanel = false,
   setShowPanel,
-  setIsPlaying,
   // New props
   rate: externalRate,
   setRate: setExternalRate,
@@ -52,13 +46,6 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const textChunksRef = useRef<string[]>([]);
   const currentChunkIndexRef = useRef(0);
-
-  // Update parent component when playing state changes
-  useEffect(() => {
-    if (setIsPlaying) {
-      setIsPlaying(isPlaying);
-    }
-  }, [isPlaying, setIsPlaying]);
 
   // Extract plain text from HTML content
   const extractTextFromHTML = (html: string): string => {

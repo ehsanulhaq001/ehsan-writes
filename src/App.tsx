@@ -85,11 +85,6 @@ const HomePage: React.FC = () => {
     }));
   };
 
-  // Clear all filters
-  const handleClearFilters = () => {
-    setSearchParams({ query: "", selectedTags: [], tagFilterMode: "OR" });
-  };
-
   // Filter posts based on selected tags only (not text search)
   const filteredPosts = filterPosts(
     posts,

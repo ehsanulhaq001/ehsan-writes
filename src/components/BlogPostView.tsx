@@ -15,7 +15,6 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
   loading,
 }) => {
   const [showAudioPanel, setShowAudioPanel] = useState(false);
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   // Add shared audio settings state
   const [audioRate, setAudioRate] = useState(1);
   const [audioVoiceIndex, setAudioVoiceIndex] = useState(0);
@@ -57,7 +56,6 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
               title={post.title}
               showPanel={showAudioPanel}
               setShowPanel={setShowAudioPanel}
-              setIsPlaying={setIsAudioPlaying}
               rate={audioRate}
               setRate={setAudioRate}
               voiceIndex={audioVoiceIndex}
@@ -75,7 +73,6 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
             panelMode={true}
             showPanel={showAudioPanel}
             setShowPanel={setShowAudioPanel}
-            setIsPlaying={setIsAudioPlaying}
             rate={audioRate}
             setRate={setAudioRate}
             voiceIndex={audioVoiceIndex}
