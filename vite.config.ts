@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  base: '/ehsan-writes/',
+  publicDir: 'public',
   build: {
     outDir: 'dist',
     sourcemap: false
