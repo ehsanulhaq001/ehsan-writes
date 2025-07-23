@@ -175,6 +175,17 @@
     max-width: 500px !important;
   }
   
+  /* Post Footer */
+  .post-footer {
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+  }
+  
+  .post-footer .back-button {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.85rem;
+  }
+  
   /* Theme Selector */
   .theme-selector {
     bottom: 1rem;
