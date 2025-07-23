@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 interface TextToSpeechProps {
   content: string;
@@ -6,11 +6,16 @@ interface TextToSpeechProps {
   panelMode?: boolean;
   showPanel?: boolean;
   setShowPanel?: (show: boolean) => void;
-  // New props for shared state
+  // Shared state props
   rate?: number;
   setRate?: (rate: number) => void;
   voiceIndex?: number;
   setVoiceIndex?: (index: number) => void;
+  currentChunkIndex?: number;
+  setCurrentChunkIndex?: (index: number) => void;
+  // Visual feedback props
+  enableHighlighting?: boolean;
+  contentElementId?: string;
 }
 
 const TextToSpeech: React.FC<TextToSpeechProps> = ({
@@ -19,11 +24,14 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
   panelMode = false,
   showPanel = false,
   setShowPanel,
-  // New props
   rate: externalRate,
   setRate: setExternalRate,
   voiceIndex: externalVoiceIndex,
   setVoiceIndex: setExternalVoiceIndex,
+  currentChunkIndex: externalCurrentChunkIndex,
+  setCurrentChunkIndex: setExternalCurrentChunkIndex,
+  enableHighlighting = true,
+  contentElementId = "post-content",
 }) => {
   const [isPlaying, setIsPlayingLocal] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -35,6 +43,7 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
   );
   const [internalSelectedVoiceIndex, setInternalSelectedVoiceIndex] =
     useState(0);
+  const [internalCurrentChunkIndex, setInternalCurrentChunkIndex] = useState(0);
 
   // Use external or internal state
   const rate = externalRate !== undefined ? externalRate : internalRate;
@@ -42,43 +51,87 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
     externalVoiceIndex !== undefined
       ? externalVoiceIndex
       : internalSelectedVoiceIndex;
+  const currentChunkIndex =
+    externalCurrentChunkIndex !== undefined
+      ? externalCurrentChunkIndex
+      : internalCurrentChunkIndex;
+
+  const setCurrentChunkIndex = useCallback(
+    (index: number) => {
+      if (setExternalCurrentChunkIndex) {
+        setExternalCurrentChunkIndex(index);
+      } else {
+        setInternalCurrentChunkIndex(index);
+      }
+    },
+    [setExternalCurrentChunkIndex]
+  );
 
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const textChunksRef = useRef<string[]>([]);
   const currentChunkIndexRef = useRef(0);
+  const highlightElementRef = useRef<HTMLElement | null>(null);
 
   // Extract plain text from HTML content
   const extractTextFromHTML = (html: string): string => {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = html;
 
-    const scripts = tempDiv.querySelectorAll("script, style");
-    scripts.forEach((el) => el.remove());
+    // Remove unwanted elements
+    const unwantedElements = tempDiv.querySelectorAll(
+      "script, style, code, pre"
+    );
+    unwantedElements.forEach((el) => el.remove());
 
-    const text = tempDiv.textContent || tempDiv.innerText || "";
-    return text.replace(/\s+/g, " ").trim();
+    // Get text content
+    let text = tempDiv.textContent || tempDiv.innerText || "";
+
+    // Clean up whitespace but preserve paragraph breaks
+    text = text
+      .replace(/\t/g, " ") // Replace tabs with spaces
+      .replace(/[ \t]+/g, " ") // Collapse multiple spaces/tabs
+      .replace(/\n\s*\n\s*/g, "\n\n") // Normalize paragraph breaks
+      .trim();
+
+    return text;
   };
 
   // Split text into chunks to avoid speech synthesis limits
   const splitTextIntoChunks = (
     text: string,
-    maxLength: number = 200
+    maxLength: number = 400
   ): string[] => {
-    const sentences = text.split(/[.!?]+\s+/);
+    const paragraphs = text.split(/\n\s*\n/).filter((p) => p.trim().length > 0);
     const chunks: string[] = [];
-    let currentChunk = "";
 
-    for (const sentence of sentences) {
-      if (currentChunk.length + sentence.length > maxLength && currentChunk) {
-        chunks.push(currentChunk.trim());
-        currentChunk = sentence;
-      } else {
-        currentChunk += (currentChunk ? ". " : "") + sentence;
+    for (const paragraph of paragraphs) {
+      const cleanParagraph = paragraph.trim();
+
+      if (cleanParagraph.length <= maxLength) {
+        chunks.push(cleanParagraph);
+        continue;
       }
-    }
 
-    if (currentChunk) {
-      chunks.push(currentChunk.trim());
+      const sentences = cleanParagraph.split(/(?<=[.!?:])\s+/);
+      let currentChunk = "";
+
+      for (const sentence of sentences) {
+        const trimmedSentence = sentence.trim();
+
+        if (
+          currentChunk &&
+          currentChunk.length + trimmedSentence.length + 1 > maxLength
+        ) {
+          chunks.push(currentChunk.trim());
+          currentChunk = trimmedSentence;
+        } else {
+          currentChunk += (currentChunk ? " " : "") + trimmedSentence;
+        }
+      }
+
+      if (currentChunk.trim()) {
+        chunks.push(currentChunk.trim());
+      }
     }
 
     return chunks.filter((chunk) => chunk.length > 0);
@@ -113,19 +166,268 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
   useEffect(() => {
     const plainText = extractTextFromHTML(content);
     const fullText = `${title}. ${plainText}`;
-    textChunksRef.current = splitTextIntoChunks(fullText);
+    const chunks = splitTextIntoChunks(fullText);
+
+    textChunksRef.current = chunks;
     currentChunkIndexRef.current = 0;
+    setCurrentChunkIndex(0);
+    removeHighlight(); // Clear any existing highlights when content changes
   }, [content, title]);
 
+  // Highlighting functions
+  const highlightCurrentChunk = useCallback(() => {
+    console.log("highlightCurrentChunk called:", {
+      enableHighlighting,
+      panelMode,
+      contentElementId,
+      currentIndex: currentChunkIndexRef.current,
+      totalChunks: textChunksRef.current.length,
+    });
+
+    if (!enableHighlighting || panelMode) {
+      console.log("Highlighting disabled or in panel mode");
+      return;
+    }
+
+    const contentElement = document.querySelector(`.${contentElementId}`);
+    console.log("Content element found:", contentElement);
+
+    if (
+      !contentElement ||
+      currentChunkIndexRef.current >= textChunksRef.current.length
+    ) {
+      console.log("No content element or chunk index out of bounds");
+      return;
+    }
+
+    // Remove previous highlight
+    removeHighlight();
+
+    const currentChunk = textChunksRef.current[currentChunkIndexRef.current];
+    console.log("Current chunk:", currentChunk?.substring(0, 100) + "...");
+
+    if (!currentChunk) return;
+
+    try {
+      // Simplified highlighting - just find and highlight the first few words
+      const searchWords = currentChunk.trim().split(" ").slice(0, 5).join(" ");
+      console.log("Searching for:", searchWords);
+
+      const highlighted = highlightTextInElement(
+        contentElement as HTMLElement,
+        searchWords
+      );
+
+      console.log("Highlighting result:", highlighted);
+
+      if (highlighted) {
+        // Auto-scroll to highlighted element
+        setTimeout(() => {
+          highlighted.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "nearest",
+          });
+        }, 100);
+      }
+    } catch (error) {
+      console.warn("Error highlighting text:", error);
+    }
+  }, [enableHighlighting, panelMode, contentElementId]);
+
+  const removeHighlight = useCallback(() => {
+    // Remove all existing highlights
+    const highlights = document.querySelectorAll(".tts-highlight");
+    highlights.forEach((highlight) => {
+      const parent = highlight.parentNode;
+      if (parent) {
+        // Replace highlight with its text content
+        const textNode = document.createTextNode(highlight.textContent || "");
+        parent.insertBefore(textNode, highlight);
+        parent.removeChild(highlight);
+        parent.normalize(); // Merge adjacent text nodes
+      }
+    });
+    highlightElementRef.current = null;
+  }, []);
+
+  const highlightTextInElement = useCallback(
+    (element: HTMLElement, searchText: string): HTMLElement | null => {
+      console.log("highlightTextInElement called with:", searchText);
+
+      const cleanSearchText = searchText.trim();
+      if (cleanSearchText.length < 5) {
+        console.log("Search text too short");
+        return null;
+      }
+
+      // Get the element's text content
+      const elementText = element.textContent || "";
+      console.log("Element text length:", elementText.length);
+
+      // Find the search text (case insensitive)
+      const searchIndex = elementText
+        .toLowerCase()
+        .indexOf(cleanSearchText.toLowerCase());
+      console.log("Search index:", searchIndex);
+
+      if (searchIndex === -1) {
+        // Try with just the first 3 words
+        const firstWords = cleanSearchText.split(" ").slice(0, 3).join(" ");
+        const fallbackIndex = elementText
+          .toLowerCase()
+          .indexOf(firstWords.toLowerCase());
+        console.log(
+          "Fallback search for:",
+          firstWords,
+          "found at:",
+          fallbackIndex
+        );
+
+        if (fallbackIndex === -1) return null;
+      }
+
+      try {
+        // Simple approach: use innerHTML replacement
+        const textToHighlight =
+          searchIndex !== -1
+            ? cleanSearchText
+            : cleanSearchText.split(" ").slice(0, 3).join(" ");
+        const actualIndex =
+          searchIndex !== -1
+            ? searchIndex
+            : elementText.toLowerCase().indexOf(textToHighlight.toLowerCase());
+
+        console.log(
+          "Highlighting text:",
+          textToHighlight,
+          "at index:",
+          actualIndex
+        );
+
+        // Get the actual text from the element at the found position
+        const startIndex = actualIndex;
+        const endIndex = actualIndex + textToHighlight.length;
+        const actualTextToHighlight = elementText.substring(
+          startIndex,
+          endIndex
+        );
+
+        console.log(
+          "Actual text to highlight:",
+          JSON.stringify(actualTextToHighlight)
+        );
+
+        // Escape special characters including newlines and emojis
+        const escapedText = actualTextToHighlight
+          .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+          .replace(/\s+/g, "\\s+"); // Handle any whitespace including newlines
+
+        console.log("Escaped regex:", escapedText);
+
+        // Create a regex that handles multiline text
+        const regex = new RegExp(`(${escapedText})`, "gi");
+
+        const originalHTML = element.innerHTML;
+        let highlighted = false;
+
+        // Replace only the first occurrence
+        const newHTML = originalHTML.replace(regex, (match) => {
+          console.log("Regex matched:", JSON.stringify(match));
+          if (!highlighted) {
+            highlighted = true;
+            return `<span class="tts-highlight">${match}</span>`;
+          }
+          return match;
+        });
+
+        console.log("Highlighted:", highlighted);
+
+        if (highlighted) {
+          element.innerHTML = newHTML;
+          const highlightElement = element.querySelector(
+            ".tts-highlight"
+          ) as HTMLElement;
+          console.log("Created highlight element:", highlightElement);
+
+          if (highlightElement) {
+            highlightElementRef.current = highlightElement;
+            return highlightElement;
+          }
+        } else {
+          // Fallback: try a simpler approach with just the first few words
+          const simpleText = textToHighlight.split(/\s+/).slice(0, 2).join(" ");
+          console.log("Trying fallback with:", simpleText);
+
+          const simpleRegex = new RegExp(
+            `(${simpleText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+            "gi"
+          );
+
+          const fallbackHTML = originalHTML.replace(simpleRegex, (match) => {
+            if (!highlighted) {
+              highlighted = true;
+              return `<span class="tts-highlight">${match}</span>`;
+            }
+            return match;
+          });
+
+          if (highlighted) {
+            element.innerHTML = fallbackHTML;
+            const highlightElement = element.querySelector(
+              ".tts-highlight"
+            ) as HTMLElement;
+            console.log(
+              "Created fallback highlight element:",
+              highlightElement
+            );
+
+            if (highlightElement) {
+              highlightElementRef.current = highlightElement;
+              return highlightElement;
+            }
+          }
+        }
+
+        console.log("No highlighting applied");
+        return null;
+      } catch (error) {
+        console.warn("Error in highlightTextInElement:", error);
+        return null;
+      }
+    },
+    []
+  );
+
+  // Cleanup effect
+  useEffect(() => {
+    return () => {
+      removeHighlight();
+    };
+  }, [removeHighlight]);
+
   const speakNextChunk = () => {
+    console.log(
+      "speakNextChunk called, chunk index:",
+      currentChunkIndexRef.current
+    );
+
     if (currentChunkIndexRef.current >= textChunksRef.current.length) {
       setIsPlayingLocal(false);
       setIsPaused(false);
       currentChunkIndexRef.current = 0;
+      setCurrentChunkIndex(0);
+      removeHighlight();
       return;
     }
 
     const chunk = textChunksRef.current[currentChunkIndexRef.current];
+    console.log("About to speak chunk:", chunk?.substring(0, 50) + "...");
+
+    // Highlight current chunk
+    console.log("Calling highlightCurrentChunk...");
+    highlightCurrentChunk();
+
     const utterance = new SpeechSynthesisUtterance(chunk);
     utterance.rate = rate;
 
@@ -134,7 +436,9 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
     }
 
     utterance.onend = () => {
+      console.log("Chunk finished, moving to next chunk");
       currentChunkIndexRef.current++;
+      setCurrentChunkIndex(currentChunkIndexRef.current);
       speakNextChunk();
     };
 
@@ -142,6 +446,7 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
       console.error("Speech synthesis error:", event);
       setIsPlayingLocal(false);
       setIsPaused(false);
+      removeHighlight();
     };
 
     utteranceRef.current = utterance;
@@ -157,6 +462,7 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
       setIsPlayingLocal(true);
     } else {
       currentChunkIndexRef.current = 0;
+      setCurrentChunkIndex(0);
       speakNextChunk();
       setIsPlayingLocal(true);
       setIsPaused(false);
@@ -176,6 +482,8 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
     setIsPlayingLocal(false);
     setIsPaused(false);
     currentChunkIndexRef.current = 0;
+    setCurrentChunkIndex(0);
+    removeHighlight();
   };
 
   const handleRateChange = (newRate: number) => {
@@ -253,7 +561,7 @@ const TextToSpeech: React.FC<TextToSpeechProps> = ({
           <div className="tts-setting">
             <label>PROGRESS</label>
             <span className="tts-progress">
-              {currentChunkIndexRef.current + 1}/{textChunksRef.current.length}
+              {currentChunkIndex + 1}/{textChunksRef.current.length}
             </span>
           </div>
         </div>

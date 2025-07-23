@@ -377,4 +377,64 @@
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(var(--accent-rgb, 99, 102, 241), 0.1);
   transform: translateY(-1px);
+}
+
+/* Text Highlighting Styles */
+.tts-highlight {
+  background-color: rgba(255, 235, 59, 0.3) !important;
+  border-radius: 3px !important;
+  padding: 2px 4px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 0 0 2px rgba(255, 235, 59, 0.5) !important;
+  position: relative !important;
+  animation: tts-highlight-pulse 0.5s ease-in-out !important;
+}
+
+/* Highlighting animation */
+@keyframes tts-highlight-pulse {
+  0% {
+    background-color: rgba(255, 235, 59, 0.6);
+    box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.8);
+  }
+  50% {
+    background-color: rgba(255, 235, 59, 0.4);
+    box-shadow: 0 0 0 6px rgba(255, 235, 59, 0.3);
+  }
+  100% {
+    background-color: rgba(255, 235, 59, 0.3);
+    box-shadow: 0 0 0 2px rgba(255, 235, 59, 0.5);
+  }
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .tts-highlight,
+.dark .tts-highlight {
+  background-color: rgba(255, 193, 7, 0.25) !important;
+  box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.4) !important;
+  animation: tts-highlight-pulse-dark 0.5s ease-in-out !important;
+}
+
+@keyframes tts-highlight-pulse-dark {
+  0% {
+    background-color: rgba(255, 193, 7, 0.5);
+    box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.6);
+  }
+  50% {
+    background-color: rgba(255, 193, 7, 0.3);
+    box-shadow: 0 0 0 6px rgba(255, 193, 7, 0.2);
+  }
+  100% {
+    background-color: rgba(255, 193, 7, 0.25);
+    box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.4);
+  }
+}
+
+/* Smooth scrolling for the entire page when highlighting */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure highlighted text is readable in all themes */
+.tts-highlight * {
+  color: inherit !important;
 } 

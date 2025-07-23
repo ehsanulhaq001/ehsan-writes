@@ -18,6 +18,7 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
   // Add shared audio settings state
   const [audioRate, setAudioRate] = useState(1);
   const [audioVoiceIndex, setAudioVoiceIndex] = useState(0);
+  const [currentChunkIndex, setCurrentChunkIndex] = useState(0);
 
   if (loading) {
     return <div className="loading">Loading post...</div>;
@@ -60,6 +61,10 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
               setRate={setAudioRate}
               voiceIndex={audioVoiceIndex}
               setVoiceIndex={setAudioVoiceIndex}
+              currentChunkIndex={currentChunkIndex}
+              setCurrentChunkIndex={setCurrentChunkIndex}
+              enableHighlighting={true}
+              contentElementId="post-content"
             />
           </div>
         </div>
@@ -77,6 +82,10 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
             setRate={setAudioRate}
             voiceIndex={audioVoiceIndex}
             setVoiceIndex={setAudioVoiceIndex}
+            currentChunkIndex={currentChunkIndex}
+            setCurrentChunkIndex={setCurrentChunkIndex}
+            enableHighlighting={true}
+            contentElementId="post-content"
           />
         </div>
       )}
