@@ -5,7 +5,7 @@ export const themes: Theme[] = [
     id: 'default',
     name: 'Default Dark',
     description: 'The classic dark theme with blue accents',
-    cssFile: '/themes/default.css',
+    cssFile: 'themes/default.css',
     preview: {
       primary: '#0a0a0a',
       secondary: '#111111',
@@ -16,7 +16,7 @@ export const themes: Theme[] = [
     id: 'light',
     name: 'Light',
     description: 'Clean and bright light theme',
-    cssFile: '/themes/light.css',
+    cssFile: 'themes/light.css',
     preview: {
       primary: '#ffffff',
       secondary: '#f8f9fa',
@@ -27,7 +27,7 @@ export const themes: Theme[] = [
     id: 'gruvbox-dark',
     name: 'Gruvbox Dark',
     description: 'Retro groove colors with warm tones',
-    cssFile: '/themes/gruvbox-dark.css',
+    cssFile: 'themes/gruvbox-dark.css',
     preview: {
       primary: '#282828',
       secondary: '#32302f',
@@ -38,7 +38,7 @@ export const themes: Theme[] = [
     id: 'nord',
     name: 'Nord',
     description: 'Arctic-inspired cool color palette',
-    cssFile: '/themes/nord.css',
+    cssFile: 'themes/nord.css',
     preview: {
       primary: '#2e3440',
       secondary: '#3b4252',
@@ -49,7 +49,7 @@ export const themes: Theme[] = [
     id: 'dracula',
     name: 'Dracula',
     description: 'Dark theme with purple accents',
-    cssFile: '/themes/dracula.css',
+    cssFile: 'themes/dracula.css',
     preview: {
       primary: '#282a36',
       secondary: '#44475a',
@@ -60,7 +60,7 @@ export const themes: Theme[] = [
     id: 'terminal-green',
     name: 'Terminal Green',
     description: 'Classic terminal green on black',
-    cssFile: '/themes/terminal-green.css',
+    cssFile: 'themes/terminal-green.css',
     preview: {
       primary: '#0c1017',
       secondary: '#1a1f29',
@@ -71,7 +71,7 @@ export const themes: Theme[] = [
     id: 'cyberpunk',
     name: 'Cyberpunk',
     description: 'Neon pink and cyan futuristic theme',
-    cssFile: '/themes/cyberpunk.css',
+    cssFile: 'themes/cyberpunk.css',
     preview: {
       primary: '#0a0a0a',
       secondary: '#1a0d1a',
@@ -82,7 +82,7 @@ export const themes: Theme[] = [
     id: 'github-light',
     name: 'GitHub Light',
     description: 'Clean light theme inspired by GitHub',
-    cssFile: '/themes/github-light.css',
+    cssFile: 'themes/github-light.css',
     preview: {
       primary: '#ffffff',
       secondary: '#f6f8fa',
@@ -93,7 +93,7 @@ export const themes: Theme[] = [
     id: 'github-dark',
     name: 'GitHub Dark',
     description: 'Dark theme inspired by GitHub Dark',
-    cssFile: '/themes/github-dark.css',
+    cssFile: 'themes/github-dark.css',
     preview: {
       primary: '#0d1117',
       secondary: '#161b22',
@@ -104,7 +104,7 @@ export const themes: Theme[] = [
     id: 'github-dimmed',
     name: 'GitHub Dimmed',
     description: 'Softer dark theme with reduced contrast',
-    cssFile: '/themes/github-dimmed.css',
+    cssFile: 'themes/github-dimmed.css',
     preview: {
       primary: '#22272e',
       secondary: '#2d333b',
@@ -115,7 +115,7 @@ export const themes: Theme[] = [
     id: 'vscode-dark',
     name: 'VS Code Dark',
     description: 'Popular VS Code editor dark theme',
-    cssFile: '/themes/vscode-dark.css',
+    cssFile: 'themes/vscode-dark.css',
     preview: {
       primary: '#1e1e1e',
       secondary: '#252526',
@@ -126,7 +126,7 @@ export const themes: Theme[] = [
     id: 'monokai',
     name: 'Monokai',
     description: 'Classic Monokai color scheme',
-    cssFile: '/themes/monokai.css',
+    cssFile: 'themes/monokai.css',
     preview: {
       primary: '#272822',
       secondary: '#383830',
@@ -137,7 +137,7 @@ export const themes: Theme[] = [
     id: 'one-dark',
     name: 'One Dark',
     description: 'Atom\'s popular One Dark theme',
-    cssFile: '/themes/one-dark.css',
+    cssFile: 'themes/one-dark.css',
     preview: {
       primary: '#282c34',
       secondary: '#2c313c',
@@ -148,7 +148,7 @@ export const themes: Theme[] = [
     id: 'solarized-light',
     name: 'Solarized Light',
     description: 'Popular Solarized light color palette',
-    cssFile: '/themes/solarized-light.css',
+    cssFile: 'themes/solarized-light.css',
     preview: {
       primary: '#fdf6e3',
       secondary: '#eee8d5',
@@ -159,7 +159,7 @@ export const themes: Theme[] = [
     id: 'solarized-dark',
     name: 'Solarized Dark',
     description: 'Popular Solarized dark color palette',
-    cssFile: '/themes/solarized-dark.css',
+    cssFile: 'themes/solarized-dark.css',
     preview: {
       primary: '#002b36',
       secondary: '#073642',
@@ -170,7 +170,7 @@ export const themes: Theme[] = [
     id: 'material-dark',
     name: 'Material Dark',
     description: 'Google\'s Material Design dark theme',
-    cssFile: '/themes/material-dark.css',
+    cssFile: 'themes/material-dark.css',
     preview: {
       primary: '#121212',
       secondary: '#1e1e1e',
@@ -181,7 +181,7 @@ export const themes: Theme[] = [
     id: 'oceanic-next',
     name: 'Oceanic Next',
     description: 'Blue-toned theme popular in editors',
-    cssFile: '/themes/oceanic-next.css',
+    cssFile: 'themes/oceanic-next.css',
     preview: {
       primary: '#1b2b34',
       secondary: '#343d46',
@@ -192,7 +192,7 @@ export const themes: Theme[] = [
     id: 'tokyo-night',
     name: 'Tokyo Night',
     description: 'Purple and blue tones inspired by Tokyo at night',
-    cssFile: '/themes/tokyo-night.css',
+    cssFile: 'themes/tokyo-night.css',
     preview: {
       primary: '#1a1b26',
       secondary: '#24283b',
@@ -203,7 +203,7 @@ export const themes: Theme[] = [
     id: 'catppuccin-mocha',
     name: 'Catppuccin Mocha',
     description: 'Warm, cozy colors from the Catppuccin palette',
-    cssFile: '/themes/catppuccin-mocha.css',
+    cssFile: 'themes/catppuccin-mocha.css',
     preview: {
       primary: '#1e1e2e',
       secondary: '#181825',
@@ -214,7 +214,7 @@ export const themes: Theme[] = [
     id: 'forest-green',
     name: 'Forest Green',
     description: 'Natural green tones for a calming experience',
-    cssFile: '/themes/forest-green.css',
+    cssFile: 'themes/forest-green.css',
     preview: {
       primary: '#0d1b1e',
       secondary: '#1a2f35',
@@ -225,7 +225,7 @@ export const themes: Theme[] = [
     id: 'sunset-orange',
     name: 'Sunset Orange',
     description: 'Warm orange and red tones for vibrant energy',
-    cssFile: '/themes/sunset-orange.css',
+    cssFile: 'themes/sunset-orange.css',
     preview: {
       primary: '#1a0e0a',
       secondary: '#2d1b14',
@@ -236,7 +236,7 @@ export const themes: Theme[] = [
     id: 'midnight-blue',
     name: 'Midnight Blue',
     description: 'Deep blue tones for a professional appearance',
-    cssFile: '/themes/midnight-blue.css',
+    cssFile: 'themes/midnight-blue.css',
     preview: {
       primary: '#0f1419',
       secondary: '#1a2332',
@@ -246,6 +246,12 @@ export const themes: Theme[] = [
 ];
 
 export const defaultTheme = 'default';
+
+// Helper function to get the correct theme URL with base path
+function getThemeUrl(cssFile: string): string {
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  return `${baseUrl}${cssFile}`;
+}
 
 // Theme management functions
 let currentThemeElement: HTMLStyleElement | null = null;
@@ -263,11 +269,12 @@ export async function loadTheme(themeId: string): Promise<void> {
   }
 
   try {
-    // Fetch the CSS file from public folder
-    const response = await fetch(theme.cssFile);
+    // Fetch the CSS file from public folder with correct base path
+    const themeUrl = getThemeUrl(theme.cssFile);
+    const response = await fetch(themeUrl);
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch theme ${themeId}`);
+      throw new Error(`Failed to fetch theme ${themeId} from ${themeUrl}`);
     }
 
     const cssText = await response.text();
