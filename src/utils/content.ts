@@ -1,12 +1,17 @@
 import { BlogPost, SearchResult, SearchSnippet } from '../types';
 import { parsePost } from './markdown';
 
+// Helper function to get the correct content URL with base path
+function getContentUrl(filename: string): string {
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  return `${baseUrl}content/${filename}`;
+}
+
 // Content loader that reads from markdown files
 export async function loadAllPosts(): Promise<BlogPost[]> {
   const posts: BlogPost[] = [];
 
-  // In a Vite/browser environment, we need to import the files statically
-  // This is a limitation of running in the browser - we can't dynamically read the filesystem
+  // Use dynamic imports to ensure content files are included in the build
   const contentModules = import.meta.glob('/content/*.md', { as: 'raw' });
 
   for (const path in contentModules) {
@@ -26,7 +31,7 @@ export async function loadAllPosts(): Promise<BlogPost[]> {
 
 export async function loadPost(id: string): Promise<BlogPost | null> {
   try {
-    // Use dynamic import to load the specific markdown file
+    // Try dynamic import first (for build-time inclusion)
     const contentModules = import.meta.glob('/content/*.md', { as: 'raw' });
     const targetPath = `/content/${id}.md`;
 
@@ -35,7 +40,17 @@ export async function loadPost(id: string): Promise<BlogPost | null> {
       return parsePost(content, id);
     }
 
-    return null;
+    // Fallback to fetch for runtime loading (GitHub Pages)
+    const contentUrl = getContentUrl(`${id}.md`);
+    const response = await fetch(contentUrl);
+
+    if (!response.ok) {
+      console.error(`Failed to fetch post ${id} from ${contentUrl}`);
+      return null;
+    }
+
+    const content = await response.text();
+    return parsePost(content, id);
   } catch (error) {
     console.error(`Error loading post ${id}:`, error);
     return null;
@@ -77,54 +92,42 @@ export function filterPosts(posts: BlogPost[], query: string, selectedTags: stri
   });
 }
 
-// Extract text snippets around search terms
-export function extractSnippets(text: string, searchTerm: string, maxLength: number = 150): SearchSnippet[] {
-  if (!searchTerm.trim()) return [];
-
+// Extract search snippets from text
+function extractSnippets(text: string, searchTerm: string, maxLength: number = 120): SearchSnippet[] {
+  const snippets: SearchSnippet[] = [];
   const lowerText = text.toLowerCase();
   const lowerSearchTerm = searchTerm.toLowerCase();
-  const snippets: SearchSnippet[] = [];
 
-  let searchIndex = 0;
-  while (searchIndex < lowerText.length) {
-    const foundIndex = lowerText.indexOf(lowerSearchTerm, searchIndex);
+  let index = 0;
+  while (index < lowerText.length) {
+    const foundIndex = lowerText.indexOf(lowerSearchTerm, index);
     if (foundIndex === -1) break;
 
     // Calculate snippet boundaries
-    const snippetStart = Math.max(0, foundIndex - Math.floor((maxLength - searchTerm.length) / 2));
-    const snippetEnd = Math.min(text.length, snippetStart + maxLength);
+    const start = Math.max(0, foundIndex - Math.floor((maxLength - searchTerm.length) / 2));
+    const end = Math.min(text.length, start + maxLength);
 
-    // Adjust start to avoid cutting words
-    let adjustedStart = snippetStart;
-    if (adjustedStart > 0 && text[adjustedStart] !== ' ') {
-      const wordStart = text.lastIndexOf(' ', adjustedStart);
-      if (wordStart !== -1 && wordStart > foundIndex - maxLength / 2) {
-        adjustedStart = wordStart + 1;
-      }
-    }
+    // Extract the snippet
+    let snippet = text.substring(start, end);
 
-    // Adjust end to avoid cutting words
-    let adjustedEnd = snippetEnd;
-    if (adjustedEnd < text.length && text[adjustedEnd] !== ' ') {
-      const wordEnd = text.indexOf(' ', adjustedEnd);
-      if (wordEnd !== -1 && wordEnd < foundIndex + maxLength / 2) {
-        adjustedEnd = wordEnd;
-      }
-    }
+    // Add ellipsis if truncated
+    if (start > 0) snippet = '...' + snippet;
+    if (end < text.length) snippet = snippet + '...';
 
-    const snippetText = text.slice(adjustedStart, adjustedEnd);
-    const highlightStart = foundIndex - adjustedStart;
-    const highlightEnd = highlightStart + searchTerm.length;
+    // Calculate highlight positions within the snippet
+    const highlightStartInSnippet = foundIndex - start + (start > 0 ? 3 : 0); // Account for ellipsis
+    const highlightEndInSnippet = highlightStartInSnippet + searchTerm.length;
 
     snippets.push({
-      text: snippetText,
-      highlightStart: Math.max(0, highlightStart),
-      highlightEnd: Math.min(snippetText.length, highlightEnd)
+      text: snippet,
+      highlightStart: Math.max(0, highlightStartInSnippet),
+      highlightEnd: Math.min(snippet.length, highlightEndInSnippet)
     });
 
-    searchIndex = foundIndex + searchTerm.length;
+    // Move to next potential match
+    index = foundIndex + searchTerm.length;
 
-    // Limit to 3 snippets per field
+    // Limit number of snippets per source
     if (snippets.length >= 3) break;
   }
 
