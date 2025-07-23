@@ -14,6 +14,19 @@ function escapeHtml(str: string): string {
 }
 
 /**
+ * Apply base path to image URLs for GitHub Pages deployment
+ */
+function applyBasePath(src: string): string {
+  // Only apply base path to assets that start with /assets/
+  if (src.startsWith('/assets/')) {
+    const baseUrl = import.meta.env.BASE_URL || '/';
+    return `${baseUrl.replace(/\/$/, '')}${src}`;
+  }
+  // Return external URLs and other paths as-is
+  return src;
+}
+
+/**
  * Utility that replaces a matched chunk with a unique placeholder token and stashes the
  * HTML output. Later, we restore all placeholders in a single pass. This prevents us
  * from accidentally re-processing code within code blocks or KaTeX output.
@@ -122,7 +135,7 @@ export function parseMarkdown(markdown: string): string {
       });
     }
     const cls = classes.length ? ` class="${classes.join(' ')}"` : '';
-    return `<img src="${src}" alt="${escapeHtml(alt)}"${cls} />`;
+    return `<img src="${applyBasePath(src)}" alt="${escapeHtml(alt)}"${cls} />`;
   });
 
   /**
